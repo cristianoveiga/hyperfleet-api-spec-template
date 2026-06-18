@@ -1,5 +1,6 @@
 model ClusterSpec {
     infraID?: string;
+    issuerURL?: string;
     platform: ClusterPlatformSpec;
     release?: ReleaseSpec;
     networking?: NetworkingSpec;
@@ -7,16 +8,39 @@ model ClusterSpec {
 }
 
 model ClusterPlatformSpec {
-    type: "template";
-    template: ClusterPlatform;
+    type: "GCP";
+    gcp: ClusterPlatform;
 }
 
 model ClusterPlatform {
     projectID?: string;
     region?: string;
-    zone?: string;
     network?: string;
     subnet?: string;
+    endpointAccess?: EndpointAccess;
+    workloadIdentity?: WorkloadIdentitySpec;
+}
+
+enum EndpointAccess {
+    Public: "Public",
+    Private: "Private",
+    PublicAndPrivate: "PublicAndPrivate",
+}
+
+model WorkloadIdentitySpec {
+    projectNumber?: string;
+    poolID?: string;
+    providerID?: string;
+    serviceAccountsRef?: ServiceAccountsRef;
+}
+
+model ServiceAccountsRef {
+    controlPlaneEmail?: string;
+    nodePoolEmail?: string;
+    cloudControllerEmail?: string;
+    storageEmail?: string;
+    imageRegistryEmail?: string;
+    networkEmail?: string;
 }
 
 model ReleaseSpec {
