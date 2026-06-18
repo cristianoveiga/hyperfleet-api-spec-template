@@ -9,26 +9,34 @@ const exampleCluster: Cluster = #{
   name: "cluster-123",
   labels: #{ environment: "production", team: "platform" },
   spec: #{
+    infraID: "cluster-123",
+    issuerURL: "https://oidc.example.gcp-hcp.devshift.net/cluster-123",
     platform: #{
-      type: "template",
-      template: #{
-        projectID: "project-123",
+      type: "GCP",
+      gcp: #{
+        projectID: "my-gcp-project",
         region: "us-central1",
-        zone: "us-central1-a",
-        network: "network-123",
-        subnet: "subnet-123",
+        network: "cluster-123-network",
+        subnet: "cluster-123-subnet",
+        endpointAccess: EndpointAccess.PublicAndPrivate,
+        workloadIdentity: #{
+          projectNumber: "123456789",
+          poolID: "cluster-123-wi-pool",
+          providerID: "cluster-123-k8s-provider",
+          serviceAccountsRef: #{
+            controlPlaneEmail: "cluster-123-ctrlplane@my-gcp-project.iam.gserviceaccount.com",
+            nodePoolEmail: "cluster-123-nodepool@my-gcp-project.iam.gserviceaccount.com",
+            cloudControllerEmail: "cluster-123-cloud-controller@my-gcp-project.iam.gserviceaccount.com",
+            storageEmail: "cluster-123-pd-csi@my-gcp-project.iam.gserviceaccount.com",
+            imageRegistryEmail: "cluster-123-image-registry@my-gcp-project.iam.gserviceaccount.com",
+            networkEmail: "cluster-123-cloud-network@my-gcp-project.iam.gserviceaccount.com",
+          },
+        },
       },
     },
     release: #{
-      image: "registry.redhat.io/openshift4/ose-cluster-version-operator:v4.14.0",
-      version: "4.14.0",
-    },
-    networking: #{
-      clusterNetwork: #[ #{ cidr: "10.10.0.0/16", hostPrefix: 24 } ],
-      serviceNetwork: #["10.96.0.0/12"],
-    },
-    dns: #{
-      baseDomain: "example.com",
+      version: "4.22.0",
+      channelGroup: "stable",
     },
   },
   generation: 1,
@@ -89,26 +97,34 @@ const exampleDeletedCluster: Cluster = #{
   name: "cluster-123",
   labels: #{ environment: "production", team: "platform" },
   spec: #{
+    infraID: "cluster-123",
+    issuerURL: "https://oidc.example.gcp-hcp.devshift.net/cluster-123",
     platform: #{
-      type: "template",
-      template: #{
-        projectID: "project-123",
+      type: "GCP",
+      gcp: #{
+        projectID: "my-gcp-project",
         region: "us-central1",
-        zone: "us-central1-a",
-        network: "network-123",
-        subnet: "subnet-123",
+        network: "cluster-123-network",
+        subnet: "cluster-123-subnet",
+        endpointAccess: EndpointAccess.PublicAndPrivate,
+        workloadIdentity: #{
+          projectNumber: "123456789",
+          poolID: "cluster-123-wi-pool",
+          providerID: "cluster-123-k8s-provider",
+          serviceAccountsRef: #{
+            controlPlaneEmail: "cluster-123-ctrlplane@my-gcp-project.iam.gserviceaccount.com",
+            nodePoolEmail: "cluster-123-nodepool@my-gcp-project.iam.gserviceaccount.com",
+            cloudControllerEmail: "cluster-123-cloud-controller@my-gcp-project.iam.gserviceaccount.com",
+            storageEmail: "cluster-123-pd-csi@my-gcp-project.iam.gserviceaccount.com",
+            imageRegistryEmail: "cluster-123-image-registry@my-gcp-project.iam.gserviceaccount.com",
+            networkEmail: "cluster-123-cloud-network@my-gcp-project.iam.gserviceaccount.com",
+          },
+        },
       },
     },
     release: #{
-      image: "registry.redhat.io/openshift4/ose-cluster-version-operator:v4.14.0",
-      version: "4.14.0",
-    },
-    networking: #{
-      clusterNetwork: #[ #{ cidr: "10.10.0.0/16", hostPrefix: 24 } ],
-      serviceNetwork: #["10.96.0.0/12"],
-    },
-    dns: #{
-      baseDomain: "example.com",
+      version: "4.22.0",
+      channelGroup: "stable",
     },
   },
   generation: 2,

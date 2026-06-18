@@ -4,24 +4,19 @@ import "hyperfleet/shared/models/clusters/model.tsp";
 const exampleClusterPatchRequest: ClusterPatchRequest = #{
   spec: #{
     platform: #{
-      type: "template",
-      template: #{
-        projectID: "project-123",
+      type: "GCP",
+      gcp: #{
+        projectID: "my-gcp-project",
         region: "us-central1",
-        zone: "us-central1-a",
-        network: "network-123",
-        subnet: "subnet-123",
+        network: "cluster-123-network",
+        subnet: "cluster-123-subnet",
+        endpointAccess: EndpointAccess.PublicAndPrivate,
       },
     },
     release: #{
-      image: "registry.redhat.io/openshift4/ose-cluster-version-operator:v4.14.0",
-      version: "4.14.0",
+      version: "4.22.1",
+      channelGroup: "stable",
     },
-    networking: #{
-      clusterNetwork: #[#{ cidr: "10.10.0.0/16", hostPrefix: 24 }],
-      serviceNetwork: #["10.96.0.0/12"],
-    },
-    dns: #{ baseDomain: "example.com" },
   },
   labels: #{ env: "staging" },
 };

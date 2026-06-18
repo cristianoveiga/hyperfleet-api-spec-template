@@ -628,26 +628,36 @@ paths:
                 team: platform
               name: cluster-123
               spec:
-                dns:
-                  baseDomain: example.com
-                networking:
-                  clusterNetwork:
-                    - cidr: 10.10.0.0/16
-                      hostPrefix: 24
-                  serviceNetwork:
-                    - 10.96.0.0/12
+                infraID: cluster-123
+                issuerURL: 'https://oidc.example.gcp-hcp.devshift.net/cluster-123'
                 platform:
-                  template:
-                    network: network-123
-                    projectID: project-123
+                  gcp:
+                    endpointAccess: PublicAndPrivate
+                    network: cluster-123-network
+                    projectID: my-gcp-project
                     region: us-central1
-                    subnet: subnet-123
-                    zone: us-central1-a
-                  type: template
+                    subnet: cluster-123-subnet
+                    workloadIdentity:
+                      poolID: cluster-123-wi-pool
+                      projectNumber: '123456789'
+                      providerID: cluster-123-k8s-provider
+                      serviceAccountsRef:
+                        cloudControllerEmail: >-
+                          cluster-123-cloud-controller@my-gcp-project.iam.gserviceaccount.com
+                        controlPlaneEmail: >-
+                          cluster-123-ctrlplane@my-gcp-project.iam.gserviceaccount.com
+                        imageRegistryEmail: >-
+                          cluster-123-image-registry@my-gcp-project.iam.gserviceaccount.com
+                        networkEmail: >-
+                          cluster-123-cloud-network@my-gcp-project.iam.gserviceaccount.com
+                        nodePoolEmail: >-
+                          cluster-123-nodepool@my-gcp-project.iam.gserviceaccount.com
+                        storageEmail: >-
+                          cluster-123-pd-csi@my-gcp-project.iam.gserviceaccount.com
+                  type: GCP
                 release:
-                  image: >-
-                    registry.redhat.io/openshift4/ose-cluster-version-operator:v4.14.0
-                  version: 4.14.0
+                  channelGroup: stable
+                  version: 4.22.0
               status:
                 conditions:
                   - created_time: '2021-01-01T10:00:00Z'
@@ -1693,25 +1703,33 @@ definitions:
         team: platform
       name: cluster-123
       spec:
-        dns:
-          baseDomain: example.com
-        networking:
-          clusterNetwork:
-            - cidr: 10.10.0.0/16
-              hostPrefix: 24
-          serviceNetwork:
-            - 10.96.0.0/12
+        infraID: cluster-123
+        issuerURL: 'https://oidc.example.gcp-hcp.devshift.net/cluster-123'
         platform:
-          template:
-            network: network-123
-            projectID: project-123
+          gcp:
+            endpointAccess: PublicAndPrivate
+            network: cluster-123-network
+            projectID: my-gcp-project
             region: us-central1
-            subnet: subnet-123
-            zone: us-central1-a
-          type: template
+            subnet: cluster-123-subnet
+            workloadIdentity:
+              poolID: cluster-123-wi-pool
+              projectNumber: '123456789'
+              providerID: cluster-123-k8s-provider
+              serviceAccountsRef:
+                cloudControllerEmail: >-
+                  cluster-123-cloud-controller@my-gcp-project.iam.gserviceaccount.com
+                controlPlaneEmail: cluster-123-ctrlplane@my-gcp-project.iam.gserviceaccount.com
+                imageRegistryEmail: >-
+                  cluster-123-image-registry@my-gcp-project.iam.gserviceaccount.com
+                networkEmail: >-
+                  cluster-123-cloud-network@my-gcp-project.iam.gserviceaccount.com
+                nodePoolEmail: cluster-123-nodepool@my-gcp-project.iam.gserviceaccount.com
+                storageEmail: cluster-123-pd-csi@my-gcp-project.iam.gserviceaccount.com
+          type: GCP
         release:
-          image: 'registry.redhat.io/openshift4/ose-cluster-version-operator:v4.14.0'
-          version: 4.14.0
+          channelGroup: stable
+          version: 4.22.0
       status:
         conditions:
           - created_time: '2021-01-01T10:00:00Z'
@@ -1828,25 +1846,33 @@ definitions:
         team: platform
       name: cluster-123
       spec:
-        dns:
-          baseDomain: example.com
-        networking:
-          clusterNetwork:
-            - cidr: 10.10.0.0/16
-              hostPrefix: 24
-          serviceNetwork:
-            - 10.96.0.0/12
+        infraID: cluster-123
+        issuerURL: 'https://oidc.example.gcp-hcp.devshift.net/cluster-123'
         platform:
-          template:
-            network: network-123
-            projectID: project-123
+          gcp:
+            endpointAccess: PublicAndPrivate
+            network: cluster-123-network
+            projectID: my-gcp-project
             region: us-central1
-            subnet: subnet-123
-            zone: us-central1-a
-          type: template
+            subnet: cluster-123-subnet
+            workloadIdentity:
+              poolID: cluster-123-wi-pool
+              projectNumber: '123456789'
+              providerID: cluster-123-k8s-provider
+              serviceAccountsRef:
+                cloudControllerEmail: >-
+                  cluster-123-cloud-controller@my-gcp-project.iam.gserviceaccount.com
+                controlPlaneEmail: cluster-123-ctrlplane@my-gcp-project.iam.gserviceaccount.com
+                imageRegistryEmail: >-
+                  cluster-123-image-registry@my-gcp-project.iam.gserviceaccount.com
+                networkEmail: >-
+                  cluster-123-cloud-network@my-gcp-project.iam.gserviceaccount.com
+                nodePoolEmail: cluster-123-nodepool@my-gcp-project.iam.gserviceaccount.com
+                storageEmail: cluster-123-pd-csi@my-gcp-project.iam.gserviceaccount.com
+          type: GCP
         release:
-          image: 'registry.redhat.io/openshift4/ose-cluster-version-operator:v4.14.0'
-          version: 4.14.0
+          channelGroup: stable
+          version: 4.22.0
     properties:
       href:
         description: Resource URI
@@ -1908,25 +1934,17 @@ definitions:
       labels:
         env: staging
       spec:
-        dns:
-          baseDomain: example.com
-        networking:
-          clusterNetwork:
-            - cidr: 10.10.0.0/16
-              hostPrefix: 24
-          serviceNetwork:
-            - 10.96.0.0/12
         platform:
-          template:
-            network: network-123
-            projectID: project-123
+          gcp:
+            endpointAccess: PublicAndPrivate
+            network: cluster-123-network
+            projectID: my-gcp-project
             region: us-central1
-            subnet: subnet-123
-            zone: us-central1-a
-          type: template
+            subnet: cluster-123-subnet
+          type: GCP
         release:
-          image: 'registry.redhat.io/openshift4/ose-cluster-version-operator:v4.14.0'
-          version: 4.14.0
+          channelGroup: stable
+          version: 4.22.1
     minProperties: 1
     properties:
       labels:
@@ -1938,6 +1956,8 @@ definitions:
     type: object
   ClusterPlatform:
     properties:
+      endpointAccess:
+        $ref: '#/definitions/EndpointAccess'
       network:
         type: string
       projectID:
@@ -1946,26 +1966,28 @@ definitions:
         type: string
       subnet:
         type: string
-      zone:
-        type: string
+      workloadIdentity:
+        $ref: '#/definitions/WorkloadIdentitySpec'
     type: object
   ClusterPlatformSpec:
     properties:
-      template:
+      gcp:
         $ref: '#/definitions/ClusterPlatform'
       type:
         enum:
-          - template
+          - GCP
         type: string
     required:
       - type
-      - template
+      - gcp
     type: object
   ClusterSpec:
     properties:
       dns:
         $ref: '#/definitions/DNSSpec'
       infraID:
+        type: string
+      issuerURL:
         type: string
       networking:
         $ref: '#/definitions/NetworkingSpec'
@@ -2031,6 +2053,12 @@ definitions:
       baseDomain:
         type: string
     type: object
+  EndpointAccess:
+    enum:
+      - Public
+      - Private
+      - PublicAndPrivate
+    type: string
   ForbiddenDetails:
     allOf:
       - $ref: '#/definitions/ProblemDetails'
@@ -2639,6 +2667,21 @@ definitions:
     required:
       - conditions
     type: object
+  ServiceAccountsRef:
+    properties:
+      cloudControllerEmail:
+        type: string
+      controlPlaneEmail:
+        type: string
+      imageRegistryEmail:
+        type: string
+      networkEmail:
+        type: string
+      nodePoolEmail:
+        type: string
+      storageEmail:
+        type: string
+    type: object
   TaintSpec:
     properties:
       effect:
@@ -3054,6 +3097,17 @@ definitions:
     required:
       - version
       - project_id
+    type: object
+  WorkloadIdentitySpec:
+    properties:
+      poolID:
+        type: string
+      projectNumber:
+        type: string
+      providerID:
+        type: string
+      serviceAccountsRef:
+        $ref: '#/definitions/ServiceAccountsRef'
     type: object
 securityDefinitions:
   BearerAuth:
